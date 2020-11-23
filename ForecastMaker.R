@@ -43,23 +43,6 @@ Allcounties<-list(Albany,	Big_Horn,	Campbell,	Carbon,	Converse,	Crook,
                Teton,	Uinta,	Washakie,	Weston
 )
 
-#Check for stationarity using Dicky-FUller
-lapply(Allcounties, adf.test)
+hybridAllcounties<-lapply(Allcounties, hybridModel, models= "aen")
+hybridforecastAllcounties<-lapply(hybridAllcounties, forecast, h=8)
 
-#Columns [16] and [7] display trend - take first difference
-
-diffFremont<-diff(Fremont)
-diffPlatte<-diff (Platte)
-
-#Use these for all other analysis, however, original data used for forecast
-
-#Assessing seasonality using WO test
-lapply(Allcounties, isSeasonal)
-#All timeseries non-seasonal, both ARIMA and ETS appropriate
-etsAllcounties<-lapply(Allcounties,ets)
-arimaAllcounties<-lapply(Allcounties, auto.arima)
-#Develop forecasts from each model
-etsforecastAllcounties<-lapply(Allcounties,forecast)
-arimaforecastAllcounties<-lapply(arimaAllcounties, forecast)
-
-#You may now plot each forecast separately

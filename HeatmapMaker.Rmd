@@ -1,0 +1,14 @@
+```{r}
+library(ggplot2)
+Data<-read.csv("HeatmapData.csv")
+
+# Original Heatmap
+names(Data)[1]<-"County"
+#Turn your 'treatment' column into a character vector
+Data$Month <- as.character(Data$Month)
+#Then turn it back into a factor with the levels in the correct order
+Data$Month <- factor(Data$Month, levels=unique(Data$Month))
+ggplot(Data, aes(Month, County, fill= Excess)) +
+  geom_tile() +
+  scale_fill_gradient(low="white", high="red")
+```
